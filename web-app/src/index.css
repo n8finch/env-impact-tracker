@@ -1,0 +1,99 @@
+@import "tailwindcss";
+
+@theme {
+  /* Typography */
+  --font-sans: 'DM Sans', sans-serif;
+  --font-mono: 'DM Mono', 'Courier New', monospace;
+  --font-display: 'Syne', sans-serif;
+
+  /* Background layers */
+  --color-base: #0a0f18;
+  --color-surface: #111827;
+  --color-panel: #1c2535;
+  --color-panel-active: #1a2d3d;
+  --color-rim: #2a3547;
+  --color-rim-hover: #3a4557;
+
+  /* Accent */
+  --color-eco: #10b981;
+  --color-eco-dim: #059669;
+  --color-eco-bright: #34d399;
+
+  /* Text */
+  --color-ink: #f1f5f9;
+  --color-ink-muted: #94a3b8;
+  --color-ink-dim: #475569;
+}
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--color-base);
+    color: var(--color-ink);
+    min-height: 100vh;
+  }
+}
+
+/* Custom range slider */
+.eco-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+
+.eco-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--color-eco);
+  cursor: pointer;
+  border: 2.5px solid var(--color-base);
+  box-shadow: 0 0 0 1px rgba(16, 185, 129, 0.5);
+  transition: box-shadow 0.15s ease;
+}
+
+.eco-slider::-webkit-slider-thumb:hover {
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2);
+}
+
+.eco-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--color-eco);
+  cursor: pointer;
+  border: 2.5px solid var(--color-base);
+  box-shadow: 0 0 0 1px rgba(16, 185, 129, 0.5);
+}
+
+/* Animated number transition */
+.metric-number {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+/* Pulse dot animation */
+@keyframes eco-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.eco-pulse {
+  animation: eco-pulse 2s ease-in-out infinite;
+}
