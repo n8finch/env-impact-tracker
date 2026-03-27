@@ -1,6 +1,18 @@
 # AI Carbon Footprint Tracker
 
-Tools to estimate and track the carbon footprint of your AI usage — starting with a Claude Code plugin that reads your actual token logs, with a web calculator and browser extension on the way.
+Tools to estimate and track the carbon footprint of your AI usage. Privacy-first: no content is ever read or sent anywhere — only string lengths and token counts.
+
+**GitHub:** [github.com/n8finch/env-impact-tracker](https://github.com/n8finch/env-impact-tracker)
+
+---
+
+## What's included
+
+| Tool | Status | Description |
+|---|---|---|
+| Claude Code Plugin | Live | `/env-impact` slash command — reads your real token logs |
+| Web Calculator | Live | Static SPA for estimating CO2 by service, plan, and usage |
+| Browser Extension | In progress | Tracks live token usage on claude.ai, chatgpt.com, gemini.google.com |
 
 ---
 
@@ -8,9 +20,9 @@ Tools to estimate and track the carbon footprint of your AI usage — starting w
 
 Track your real token usage in Claude Code and get a monthly carbon estimate via a `/env-impact` slash command.
 
-**How it works:** Reads `~/.claude/projects/**/*.jsonl` (Claude Code's local conversation logs), sums token counts for the current month, and converts them to a CO₂ estimate. No content is ever read — only the `usage` block from each API response. Resets automatically on the 1st of each month.
+**How it works:** Reads `~/.claude/projects/**/*.jsonl` (Claude Code's local conversation logs), sums token counts for the current month, and converts them to a CO2 estimate. No content is ever read — only the `usage` block from each API response. Resets automatically on the 1st of each month.
 
-### Privacy & efficiency
+### Privacy and efficiency
 
 - **Privacy-first:** Only reads the `usage` block (token counts) from each log entry — message content, tool inputs, and all other fields are ignored.
 - **Zero tokens consumed:** The script runs as a plain Python process outside of Claude. The `/env-impact` command costs one small API call to dispatch, but the calculation itself uses no tokens.
@@ -18,13 +30,20 @@ Track your real token usage in Claude Code and get a monthly carbon estimate via
 
 ### Install
 
+One command, no repo clone needed:
+
 ```bash
-git clone https://github.com/n8finch/env-impact-tracker
-cd env-impact-tracker
-bash claude-plugin/install.sh
+curl -fsSL https://raw.githubusercontent.com/n8finch/env-impact-tracker/main/claude-plugin/install.sh | bash
 ```
 
-This symlinks `track.py` into `~/.claude/plugins/env-impact/` and `env-impact.md` into `~/.claude/commands/`. Requires Python 3 (no dependencies).
+This downloads `track.py` into `~/.claude/plugins/env-impact/` and `env-impact.md` into `~/.claude/commands/`. Requires Python 3 (no other dependencies).
+
+To uninstall:
+
+```bash
+rm ~/.claude/plugins/env-impact/track.py
+rm ~/.claude/commands/env-impact.md
+```
 
 ### Usage
 
@@ -55,9 +74,9 @@ AI Carbon Footprint — March 2026
 
 ### Carbon methodology
 
-- Baseline: 400g CO₂e per 1,000 standard Claude queries (2026 benchmark)
-- Coding-heavy multiplier: 1.5× (Claude Code sessions are all coding)
-- Effective rate: 0.3g CO₂e per 1,000 tokens
+- Baseline: 400g CO2e per 1,000 standard Claude queries (2026 benchmark)
+- Coding-heavy multiplier: 1.5x (Claude Code sessions are all coding)
+- Effective rate: 0.3g CO2e per 1,000 tokens
 - Cache reads weighted at 10% (significantly less compute than fresh tokens)
 
 ---
@@ -68,7 +87,7 @@ Live at: **[env-impact-tracker.netlify.app](https://env-impact-tracker.netlify.a
 
 A static single-page app for estimating your monthly AI carbon footprint. No backend, no tracking — all calculations run locally in your browser.
 
-**Features:**
+### Features
 
 - Service selector: Claude, ChatGPT, Gemini, GitHub Copilot, Perplexity
 - Plan selector per service (Claude Pro / Max 5x / Max 20x, ChatGPT Plus / Pro, etc.)
@@ -118,16 +137,50 @@ See `web-app/.env.example` for reference.
 
 ---
 
-## Browser Extension *(coming soon)*
+## Browser Extension
 
-A Chrome/Edge extension that monitors token usage live on `claude.ai`, `chatgpt.com`, and `gemini.google.com`. Intercepts a `/env-impact` command typed in any chat to show a carbon report without sending a message. Zero content read — tracks only message length.
+Tracks live token usage on `claude.ai`, `chatgpt.com`, and `gemini.google.com`. Shows a monthly carbon estimate in the extension popup. Type `/env-impact` in any chat input to get an inline carbon report without sending a message.
+
+**Privacy:** only message character counts are tracked — never content. All data is stored locally in `chrome.storage.local`.
+
+### Install (development / unpacked)
+
+1. Open `chrome://extensions` (or `edge://extensions`)
+2. Enable **Developer mode**
+3. Click **Load unpacked** and select the `browser-extension/` directory
+
+See `browser-extension/DEV.md` for full development instructions.
+
+### Architecture
+
+| File | Role |
+|---|---|
+| `manifest.json` | MV3 manifest, host permissions for 3 sites |
+| `content.js` | MutationObserver per site, token estimation, `/env-impact` intercept |
+| `background.js` | Service worker, monthly storage, carbon calculation |
+| `popup.html/js/css` | Extension popup dashboard |
+
+### Carbon methodology
+
+- Token estimate: `character_count / 4` (standard heuristic, no access to official tokenizers)
+- Site baselines: Claude 0.6g/1K tokens (includes 1.5x coding), ChatGPT 0.25g/1K, Gemini 0.03g/1K
+- Reasoning mode detected via DOM selectors: output tokens weighted at 20x
 
 ---
 
 ## Project structure
 
 ```
-claude-plugin/      # Phase 1: Claude Code /env-impact command
-web-app/            # Phase 2: React calculator (live on Netlify)
-browser-extension/  # Phase 3: Chrome/Edge extension (coming soon)
+claude-plugin/      # Phase 1: Claude Code /env-impact slash command
+web-app/            # Phase 2: React calculator (Vite + Tailwind v4)
+browser-extension/  # Phase 3: Chrome/Edge MV3 extension
 ```
+
+---
+
+## Contributing
+
+PRs welcome, especially for:
+- Updated DOM selectors in `browser-extension/content.js` when chat UIs change
+- Additional countries in `web-app/src/components/CivicAction.tsx`
+- Emissions data corrections with sources in `web-app/src/lib/emissions-data.ts`

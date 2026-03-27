@@ -250,6 +250,13 @@ export default function App() {
             published research on LLM compute scaling.
           </p>
           <p>No backend. No tracking. All calculations run locally in your browser.</p>
+          <p style={{ marginTop: '0.75rem', color: 'var(--color-ink-dim)' }}>
+            Disclaimer: all figures are estimates and best guesses based on publicly available
+            benchmarks. Exact energy use varies by data center, model version, request type, and
+            provider. Where uncertainty exists, inputs are intentionally biased toward
+            overestimation. It is better to assume a larger footprint and act accordingly than to
+            undercount and do nothing.
+          </p>
           <p style={{ marginTop: '0.75rem' }}>
             &copy; {new Date().getFullYear()}{' '}
             <a

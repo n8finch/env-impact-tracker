@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EcoAI Carbon Tracker</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="header">
+    <span class="brand">EcoAI</span>
+    <span class="month" id="month">—</span>
+  </div>
+
+  <!-- Hero metric -->
+  <div class="hero">
+    <span class="hero-value" id="kg">0.0000</span>
+    <span class="hero-unit">kg CO₂e this month</span>
+  </div>
+
+  <!-- Equivalences -->
+  <div class="equiv-row">
+    <div class="equiv">
+      <span class="equiv-value" id="miles">0.0</span>
+      <span class="equiv-label">miles driven</span>
+    </div>
+    <div class="equiv">
+      <span class="equiv-value" id="kettles">0</span>
+      <span class="equiv-label">kettles boiled</span>
+    </div>
+    <div class="equiv">
+      <span class="equiv-value" id="smartphones">0</span>
+      <span class="equiv-label">phone charges</span>
+    </div>
+  </div>
+
+  <!-- Per-site breakdown -->
+  <div class="section-label">By service</div>
+  <div id="sites" class="sites"></div>
+
+  <!-- Totals -->
+  <div class="totals">
+    <span id="queries">0 queries</span>
+    <span id="tokens">0 tokens est.</span>
+  </div>
+
+  <!-- Actions -->
+  <div class="actions">
+    <a class="btn btn-primary" href="https://env-impact-tracker.netlify.app" target="_blank">
+      Full Calculator ↗
+    </a>
+    <button class="btn btn-ghost" id="reset-btn">Reset Month</button>
+  </div>
+
+  <div class="footer">
+    Estimates based on character count ÷ 4.<br />
+    No content is ever read or stored.
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
