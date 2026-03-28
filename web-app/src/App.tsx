@@ -155,7 +155,7 @@ export default function App() {
                 style={{ color: 'var(--color-eco)' }}
                 aria-hidden="true"
               >
-                My Environmental Impact
+                My AI Environmental Impact
               </span>
               <div className="flex-1 h-px" style={{ background: 'var(--color-rim)' }} />
               <span
