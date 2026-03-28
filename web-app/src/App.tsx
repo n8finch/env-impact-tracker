@@ -155,7 +155,7 @@ export default function App() {
                 style={{ color: 'var(--color-eco)' }}
                 aria-hidden="true"
               >
-                EcoAI
+                My Environmental Impact
               </span>
               <div className="flex-1 h-px" style={{ background: 'var(--color-rim)' }} />
               <span
@@ -335,7 +335,6 @@ export default function App() {
             </p>
             <div style={{ marginTop: '1rem' }}>
               <div id="wcb" className="carbonbadge wcb-d"></div>
-              <script src="https://unpkg.com/website-carbon-badges@1.1.3/b.min.js" defer></script>
             </div>
           </footer>
         </main>
