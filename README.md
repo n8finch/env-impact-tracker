@@ -1,6 +1,6 @@
 # AI Carbon Footprint Tracker
 
-Tools to estimate and track the carbon footprint of your AI usage. Privacy-first: no content is ever read or sent anywhere — only string lengths and token counts.
+Tools to estimate and track the carbon footprint of your AI usage. Privacy-first: no content is ever read or sent anywhere. Only string lengths and token counts.
 
 **GitHub:** [github.com/n8finch/env-impact-tracker](https://github.com/n8finch/env-impact-tracker)
 
@@ -10,7 +10,7 @@ Tools to estimate and track the carbon footprint of your AI usage. Privacy-first
 
 | Tool | Status | Description |
 |---|---|---|
-| Claude Code Plugin | Live | `/env-impact` slash command — reads your real token logs |
+| Claude Code Plugin | Live | `/env-impact` slash command: reads your real token logs |
 | Web Calculator | Live | Static SPA for estimating CO2 by service, plan, and usage |
 | Browser Extension | In progress | Tracks live token usage on claude.ai, chatgpt.com, gemini.google.com |
 
@@ -20,11 +20,11 @@ Tools to estimate and track the carbon footprint of your AI usage. Privacy-first
 
 Track your real token usage in Claude Code and get a monthly carbon estimate via a `/env-impact` slash command.
 
-**How it works:** Reads `~/.claude/projects/**/*.jsonl` (Claude Code's local conversation logs), sums token counts for the current month, and converts them to a CO2 estimate. No content is ever read — only the `usage` block from each API response. Resets automatically on the 1st of each month.
+**How it works:** Reads `~/.claude/projects/**/*.jsonl` (Claude Code's local conversation logs), sums token counts for the current month, and converts them to a CO2 estimate. No content is ever read; only the `usage` block from each API response is used. Resets automatically on the 1st of each month.
 
 ### Privacy and efficiency
 
-- **Privacy-first:** Only reads the `usage` block (token counts) from each log entry — message content, tool inputs, and all other fields are ignored.
+- **Privacy-first:** Only reads the `usage` block (token counts) from each log entry. Message content, tool inputs, and all other fields are ignored.
 - **Zero tokens consumed:** The script runs as a plain Python process outside of Claude. The `/env-impact` command costs one small API call to dispatch, but the calculation itself uses no tokens.
 - **Fully local:** Pure Python stdlib (`json`, `datetime`, `pathlib`). No network calls, no dependencies, nothing leaves your machine.
 
@@ -85,7 +85,7 @@ AI Carbon Footprint — March 2026
 
 Live at: **[env-impact-tracker.netlify.app](https://env-impact-tracker.netlify.app)** *(update once deployed)*
 
-A static single-page app for estimating your monthly AI carbon footprint. No backend, no tracking — all calculations run locally in your browser.
+A static single-page app for estimating your monthly AI carbon footprint. No backend, no tracking. All calculations run locally in your browser.
 
 ### Features
 
@@ -124,7 +124,7 @@ npm run dev
 
 | Variable | Purpose |
 |---|---|
-| `VITE_POSTHOG_KEY` | PostHog analytics key (optional — analytics disabled if unset) |
+| `VITE_POSTHOG_KEY` | PostHog analytics key (optional; analytics disabled if unset) |
 
 See `web-app/.env.example` for reference.
 
@@ -141,7 +141,7 @@ See `web-app/.env.example` for reference.
 
 Tracks live token usage on `claude.ai`, `chatgpt.com`, and `gemini.google.com`. Shows a monthly carbon estimate in the extension popup. Type `/env-impact` in any chat input to get an inline carbon report without sending a message.
 
-**Privacy:** only message character counts are tracked — never content. All data is stored locally in `chrome.storage.local`.
+**Privacy:** only message character counts are tracked, never content. All data is stored locally in `chrome.storage.local`.
 
 ### Install (development / unpacked)
 
