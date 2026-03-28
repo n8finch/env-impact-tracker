@@ -177,4 +177,20 @@ export const RESOURCES: Resource[] = [
     url: 'https://www.microsoft.com/en-us/sustainability',
     tag: 'Sustainability Report',
   },
+  {
+    title: 'Machine Learning Emissions Calculator',
+    author: 'Lacoste et al. / MLco2',
+    description:
+      'Estimates the carbon footprint of training ML models based on hardware type, runtime, cloud provider, and region. Useful for comparing training vs. inference costs.',
+    url: 'https://mlco2.github.io/impact/',
+    tag: 'Tool',
+  },
+  {
+    title: 'Open LLM Leaderboard',
+    author: 'Hugging Face',
+    description:
+      'Benchmarks open-source language models on standard tasks. Useful for comparing model capabilities and understanding the landscape of alternatives to closed-source AI.',
+    url: 'https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard#/',
+    tag: 'Leaderboard',
+  },
 ];

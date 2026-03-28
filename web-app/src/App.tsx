@@ -333,6 +333,10 @@ export default function App() {
                 Nate Finch
               </a>
             </p>
+            <div style={{ marginTop: '1rem' }}>
+              <div id="wcb" className="carbonbadge wcb-d"></div>
+              <script src="https://unpkg.com/website-carbon-badges@1.1.3/b.min.js" defer></script>
+            </div>
           </footer>
         </main>
       </div>
