@@ -86,8 +86,8 @@ export function MultiplierToggles({ options, onChange }: Props) {
                           borderColor: 'rgba(16,185,129,0.3)',
                         }
                       : {
-                          background: 'var(--color-rim)',
-                          color: 'var(--color-ink-dim)',
+                          background: 'transparent',
+                          color: 'var(--color-ink-muted)',
                           borderColor: 'var(--color-rim)',
                         }
                   }

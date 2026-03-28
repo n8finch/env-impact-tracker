@@ -12,7 +12,7 @@ export function Methodology() {
           How the numbers work
         </h2>
 
-        <div className="space-y-3 font-mono text-xs leading-relaxed" style={{ color: 'var(--color-ink-muted)' }}>
+        <div className="space-y-3 font-mono text-sm leading-relaxed" style={{ color: 'var(--color-ink-muted)' }}>
           <p>
             <span style={{ color: 'var(--color-ink)' }}>Slider mode</span> uses published
             per-query emission benchmarks (grams CO₂e per 1,000 standard queries) scaled by what

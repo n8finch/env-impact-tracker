@@ -146,98 +146,77 @@ export function CivicAction() {
 
   return (
     <div
-      className="rounded-xl border p-6 space-y-5"
+      className="rounded-xl border p-6"
       style={{ background: 'var(--color-panel)', borderColor: 'var(--color-rim)' }}
     >
-      <p className="text-sm leading-relaxed" style={{ color: 'var(--color-ink-muted)' }}>
+      <p className="text-sm leading-relaxed mb-5" style={{ color: 'var(--color-ink-muted)' }}>
         Individual action matters, but corporate and government decisions have far greater
         environmental impact. Use your voice.
       </p>
 
-      {/* Country selector */}
-      <div>
-        <label
-          htmlFor="country-select"
-          className="font-mono text-xs uppercase tracking-widest block mb-2"
-          style={{ color: 'var(--color-eco)' }}
-        >
-          Your country
-        </label>
-        <select
-          id="country-select"
-          value={country}
-          onChange={(e) => setCountry(e.target.value)}
-          className="w-full rounded-lg px-4 py-2.5 font-mono text-sm border outline-none"
-          style={{
-            background: 'var(--color-surface)',
-            borderColor: 'var(--color-rim)',
-            color: 'var(--color-ink)',
-            cursor: 'pointer',
-          }}
-          onFocus={(e) => { (e.target as HTMLSelectElement).style.borderColor = 'var(--color-eco)'; }}
-          onBlur={(e) => { (e.target as HTMLSelectElement).style.borderColor = 'var(--color-rim)'; }}
-        >
-          {COUNTRIES.map((c) => (
-            <option key={c.name} value={c.name}>
-              {c.flag} {c.name}
-            </option>
-          ))}
-          <option disabled>──────────────────</option>
-          <option value="__other__">Other - add yours via GitHub ↗</option>
-        </select>
-      </div>
+      {/* Label above grid so select and buttons share the same top edge */}
+      <label
+        htmlFor="country-select"
+        className="font-mono text-xs uppercase tracking-widest block mb-2"
+        style={{ color: 'var(--color-eco)' }}
+      >
+        Your country
+      </label>
 
-      {isOther ? (
-        <a
-          href={GITHUB_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-3 rounded-lg px-4 py-3 border transition-colors"
-          style={{
-            background: 'var(--color-surface)',
-            borderColor: 'var(--color-rim)',
-            color: 'var(--color-ink)',
-            textDecoration: 'none',
-          }}
-          onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = 'var(--color-eco)'; }}
-          onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = 'var(--color-rim)'; }}
-        >
-          <Github size={16} style={{ color: 'var(--color-eco)', flexShrink: 0 }} />
-          <div>
-            <p className="font-mono text-sm font-medium" style={{ color: 'var(--color-ink)' }}>
-              Open a PR to add your country
-            </p>
-            <p className="font-mono text-xs mt-0.5" style={{ color: 'var(--color-ink-dim)' }}>
-              {GITHUB_URL}
-            </p>
-          </div>
-        </a>
-      ) : (
-        <div className="flex flex-col gap-3">
-          {contact.writeRep && (
+      {/* Two-column grid: selector left, buttons right */}
+      <div
+        className="grid gap-4"
+        style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))', alignItems: 'start' }}
+      >
+        {/* Left: select + GitHub note stacked */}
+        <div className="flex flex-col gap-2">
+          <select
+            id="country-select"
+            value={country}
+            onChange={(e) => setCountry(e.target.value)}
+            className="w-full rounded-lg px-4 py-2.5 font-mono text-sm border outline-none"
+            style={{
+              background: 'var(--color-surface)',
+              borderColor: 'var(--color-rim)',
+              color: 'var(--color-ink)',
+              cursor: 'pointer',
+            }}
+            onFocus={(e) => { (e.target as HTMLSelectElement).style.borderColor = 'var(--color-eco)'; }}
+            onBlur={(e) => { (e.target as HTMLSelectElement).style.borderColor = 'var(--color-rim)'; }}
+          >
+            {COUNTRIES.map((c) => (
+              <option key={c.name} value={c.name}>
+                {c.flag} {c.name}
+              </option>
+            ))}
+            <option disabled>──────────────────</option>
+            <option value="__other__">Other - add yours via GitHub</option>
+          </select>
+
+          {/* GitHub PR note lives under the select */}
+          <p className="font-mono text-xs" style={{ color: 'var(--color-ink-dim)', marginTop: '0.75rem', marginBottom: '0.75rem' }}>
+            Missing your country?{' '}
             <a
-              href={contact.writeRep.url}
+              href={GITHUB_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-3 rounded-lg px-4 py-3 border transition-colors"
-              style={{
-                background: 'rgba(16,185,129,0.08)',
-                borderColor: 'var(--color-eco)',
-                textDecoration: 'none',
-              }}
-              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = 'rgba(16,185,129,0.14)'; }}
-              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = 'rgba(16,185,129,0.08)'; }}
+              aria-label="Open a PR on GitHub to add your country (opens in new tab)"
+              style={{ color: 'var(--color-eco)', textDecoration: 'underline' }}
             >
-              <Mail size={16} style={{ color: 'var(--color-eco)', flexShrink: 0 }} />
-              <span className="font-mono text-sm font-medium" style={{ color: 'var(--color-eco)' }}>
-                {contact.writeRep.label}
-              </span>
-            </a>
-          )}
+              Open a PR on GitHub
+            </a>{' '}
+            to add it.
+          </p>
+        </div>
 
-          {contact.call && (
+        {/* Right: action buttons */}
+        <div className="flex flex-col gap-3">
+          {isOther ? (
             <a
-              href={`tel:${contact.call.number.replace(/[^+\d]/g, '')}`}
+              href={GITHUB_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Open a PR on GitHub to add your country (opens in new tab)"
               className="flex items-center gap-3 rounded-lg px-4 py-3 border transition-colors"
               style={{
                 background: 'var(--color-surface)',
@@ -248,37 +227,72 @@ export function CivicAction() {
               onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = 'var(--color-eco)'; }}
               onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = 'var(--color-rim)'; }}
             >
-              <Phone size={16} style={{ color: 'var(--color-ink-dim)', flexShrink: 0 }} />
+              <Github size={16} style={{ color: 'var(--color-eco)', flexShrink: 0 }} aria-hidden="true" />
               <div>
-                <p className="font-mono text-sm" style={{ color: 'var(--color-ink)' }}>
-                  {contact.call.label}
+                <p className="font-mono text-sm font-medium" style={{ color: 'var(--color-ink)' }}>
+                  Open a PR to add your country
                 </p>
-                <p className="font-mono text-xs" style={{ color: 'var(--color-eco)' }}>
-                  {contact.call.number}
-                  {contact.call.note && (
-                    <span style={{ color: 'var(--color-ink-dim)' }}> ({contact.call.note})</span>
-                  )}
+                <p className="font-mono text-xs mt-0.5" style={{ color: 'var(--color-ink-dim)' }}>
+                  {GITHUB_URL}
                 </p>
               </div>
             </a>
+          ) : (
+            <>
+              {contact.writeRep && (
+                <a
+                  href={contact.writeRep.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${contact.writeRep.label} (opens in new tab)`}
+                  className="flex items-center gap-3 rounded-lg px-4 py-3 border transition-colors"
+                  style={{
+                    background: 'rgba(16,185,129,0.08)',
+                    borderColor: 'var(--color-eco)',
+                    textDecoration: 'none',
+                  }}
+                  onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = 'rgba(16,185,129,0.14)'; }}
+                  onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = 'rgba(16,185,129,0.08)'; }}
+                >
+                  <Mail size={16} style={{ color: 'var(--color-eco)', flexShrink: 0 }} aria-hidden="true" />
+                  <span className="font-mono text-sm font-medium" style={{ color: 'var(--color-eco)' }}>
+                    {contact.writeRep.label}
+                  </span>
+                </a>
+              )}
+
+              {contact.call && (
+                <a
+                  href={`tel:${contact.call.number.replace(/[^+\d]/g, '')}`}
+                  aria-label={`Call ${contact.call.label}: ${contact.call.number}`}
+                  className="flex items-center gap-3 rounded-lg px-4 py-3 border transition-colors"
+                  style={{
+                    background: 'var(--color-surface)',
+                    borderColor: 'var(--color-rim)',
+                    color: 'var(--color-ink)',
+                    textDecoration: 'none',
+                  }}
+                  onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = 'var(--color-eco)'; }}
+                  onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = 'var(--color-rim)'; }}
+                >
+                  <Phone size={16} style={{ color: 'var(--color-ink-dim)', flexShrink: 0 }} aria-hidden="true" />
+                  <div>
+                    <p className="font-mono text-sm" style={{ color: 'var(--color-ink)' }}>
+                      {contact.call.label}
+                    </p>
+                    <p className="font-mono text-xs" style={{ color: 'var(--color-eco)' }}>
+                      {contact.call.number}
+                      {contact.call.note && (
+                        <span style={{ color: 'var(--color-ink-dim)' }}> ({contact.call.note})</span>
+                      )}
+                    </p>
+                  </div>
+                </a>
+              )}
+            </>
           )}
         </div>
-      )}
-
-      {!isOther && (
-        <p className="font-mono text-xs" style={{ color: 'var(--color-ink-dim)' }}>
-          Missing your country?{' '}
-          <a
-            href={GITHUB_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ color: 'var(--color-eco)', textDecoration: 'none' }}
-          >
-            Open a PR on GitHub
-          </a>{' '}
-          to add it.
-        </p>
-      )}
+      </div>
     </div>
   );
 }

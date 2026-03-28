@@ -26,7 +26,7 @@ export function PlanSelector({ plans, selected, onSelect }: Props) {
             }}
           >
             <span className="font-display font-semibold">{plan.name}</span>
-            <span className="font-mono opacity-60">{plan.price}</span>
+            <span className="font-mono" style={{ color: 'var(--color-ink-dim)' }}>{plan.price}</span>
           </button>
         );
       })}

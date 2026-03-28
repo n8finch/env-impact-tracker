@@ -42,7 +42,7 @@ export function Resources() {
               <p className="font-mono text-xs mt-0.5 mb-2" style={{ color: 'var(--color-ink-dim)' }}>
                 {r.author}
               </p>
-              <p className="text-sm leading-relaxed" style={{ color: 'var(--color-ink-muted)' }}>
+              <p className="text-base leading-relaxed" style={{ color: 'var(--color-ink-muted)' }}>
                 {r.description}
               </p>
             </div>
